@@ -57,7 +57,7 @@ VALIDATE $? "unzip catalogue"
 npm install &>>$LOG_FILE
 VALIDATE $? "install Depndencies"
 cp catalogue.service /etc/systemd/system/catalogue.service
-VALIDATE $? "Copy syatemctl service"
+VALIDATE $? "Copy systemctl service"
 systemctl daemon-reload
 
 systemctl enable catalogue &>>$LOG_FILE
