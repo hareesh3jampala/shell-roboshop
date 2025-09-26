@@ -49,16 +49,16 @@ else
     echo -e "User already exist ... $Y SKIPPING $N"
 fi
 
-mkdir -p /app 
+mkdir -p /app &>>$LOG_FILE
 VALIDATE $? "Creating app directory"
 
 curl -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading cart application"
 
-cd /app 
+cd /app &>>$LOG_FILE
 VALIDATE $? "Changing app directory"
 
-rm -rf /app/*
+rm -rf /app/* &>>$LOG_FILE
 VALIDATE $? "Removing existing code"
 
 unzip /tmp/cart.zip &>>$LOG_FILE
@@ -67,7 +67,7 @@ VALIDATE $? "unzip cart"
 npm install &>>$LOG_FILE
 VALIDATE $? "install Depndencies"
 
-cp $SCRIPT_DIR/cart.service /etc/systemd/system/cart.service
+cp $SCRIPT_DIR/cart.service /etc/systemd/system/cart.service &>>$LOG_FILE
 VALIDATE $? "Copy systemctl service"
 systemctl daemon-reload
 
@@ -75,5 +75,5 @@ systemctl enable cart &>>$LOG_FILE
 VALIDATE $? "Enable cart"
 
 
-systemctl restart cart
+systemctl restart cart &>>$LOG_FILE
 VALIDATE $? "restarted cart service"
