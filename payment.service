@@ -1,0 +1,22 @@
+[Unit]
+Description=Payment Service
+
+[Service]
+User=root
+WorkingDirectory=/app
+// highlight-start
+Environment=CART_HOST=cart.hareesh3jampala.in
+Environment=CART_PORT=8080
+Environment=USER_HOST=user.hareesh3jampala.in
+Environment=USER_PORT=8080
+Environment=AMQP_HOST=rabbitmq.hareesh3jampala.in
+// highlight-end
+Environment=AMQP_USER=roboshop
+Environment=AMQP_PASS=roboshop123
+
+ExecStart=/usr/local/bin/uwsgi --ini payment.ini
+ExecStop=/bin/kill -9 $MAINPID
+SyslogIdentifier=payment
+
+[Install]
+WantedBy=multi-user.target
